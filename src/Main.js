@@ -110,17 +110,12 @@ const Main = (props) => {
                     <p>Double tap a todo item to mark as Done/Completed or Active/Uncompleted. To remove item click delete. To add an item: type it and hit Enter! Hurray!</p>
                 </div>
             </div>
-            <a style={{bottom:'12%', position:'fixed'}} id="menu" onClick={() => M.TapTarget.getInstance(tapRef.current).open() } className="waves-effect waves-light btn btn-floating" ><i className="material-icons">menu</i></a>
+            <a style={{bottom:'8%', position:'fixed'}} id="menu" onClick={() => M.TapTarget.getInstance(tapRef.current).open() } className="waves-effect waves-light btn btn-floating" ><i className="material-icons">menu</i></a>
         </div>
         <footer className="page-footer black center"  style={{bottom:'0%', position:'fixed', width:'100%'}}>
           <div className="container">
             <div className="row">
               TODOS APP
-            </div>
-          </div>
-          <div className="footer-copyright">
-            <div className="container">
-            © 2020 Copyright Text
             </div>
           </div>
         </footer>
