@@ -88,9 +88,8 @@ const Main = (props) => {
                     {
                         filteredTodos.length > 0 ? filteredTodos.map(todo => {
                             return (
-                                <li style={todo.status ==='done' ? {textDecorationLine:'line-through'} : {}} className="collection-item" key={todo.title}>{`${todo.title} -- ${todo.status}`}
+                                <li onDoubleClick={ () => toggleTodo(todo.title)  } style={todo.status ==='done' ? {textDecorationLine:'line-through'} : {}} className="collection-item" key={todo.title}>{`${todo.title} -- ${todo.status}`}
                                     <button onClick={ () => removeTodo(todo.title) } className="red white-text right" style={{borderRadius:'3px', border:'green', padding:'5px'}}> Delete </button>
-                                    <button onClick={ () => toggleTodo(todo.title)  } className="green white-text right bt" style={{borderRadius:'3px', border:'green', padding:'5px'}}> Toggle </button>
                                 </li>
                             )
                         })
