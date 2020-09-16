@@ -61,7 +61,7 @@ const Main = (props) => {
  
     return (
         <>
-        <div className="container">
+        <div className="container" style={{paddingBottom:'5%'}}>
             <div className="section">
                 <div className="center">
                     <h5 className="teal-text">TODO APP</h5><hr></hr>
