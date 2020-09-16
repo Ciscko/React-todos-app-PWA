@@ -9,6 +9,7 @@
     "axios": "^0.20.0",
     "express": "^4.17.1",
     "formik": "^2.1.5",
+    "http-server": "^0.12.3",
     "materialize-css": "^1.0.0-rc.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -21,7 +22,7 @@
   "scripts": {
     "start": "node server.js",
     "start-dev": "react-scripts start",
-    "start-sw": "node server.js",
+    "start-sw": "http-server ./build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
