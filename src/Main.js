@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import M from 'materialize-css/dist/js/materialize.min.js'
+
 const Main = (props) => {
     const filters = ['all', 'active', 'done']
     const [todos, setTodos] = React.useState([
@@ -8,8 +10,13 @@ const Main = (props) => {
     ])
     const [filter, setFilter] = React.useState(filters[0])
     const [filteredTodos, setFiltered] = React.useState([])
-    const [input , setInput ] = React.useState('')
-
+    const [input, setInput] = React.useState('')
+    const tapRef = React.createRef()
+    let tapInst;
+    useEffect(() => {
+        filterTodos(filter)
+        tapInst = M.TapTarget.init(tapRef.current)
+    }, [filter, todos])
     const filterTodos = (item) => {
         setFilter(item)
         switch (item) {
@@ -35,26 +42,25 @@ const Main = (props) => {
 
     const toggleTodo = (mytodo) => {
         setTodos([...todos.map(todo => {
-            if(todo.title === mytodo){
+            if (todo.title === mytodo) {
                 return {
-                    title: mytodo, status : todo.status === 'active' ? 'done' : 'active'
+                    title: mytodo, status: todo.status === 'active' ? 'done' : 'active'
                 }
-            }else{
+            } else {
                 return todo
             }
         })])
     }
-
+    
     const addTodo = e => {
-        if(e.key === 'Enter' && input !== ''){ 
-            setTodos([...todos, { title:input, status:'active'} ])
+        if (e.key === 'Enter' && input !== '') {
+            setTodos([...todos, { title: input, status: 'active' }])
             setInput('')
-         }      
+        }
     }
-    useEffect(() => {
-        filterTodos(filter)
-    }, [filter, todos])
+ 
     return (
+        <>
         <div className="container">
             <div className="section">
                 <div className="center">
@@ -72,14 +78,14 @@ const Main = (props) => {
                             }
                         </ul>
                     </div>
-                        <div className="input-field  col l8 m8 s12">
-                            <label className="active" htmlFor="todo">Enter todo...</label>
-                            <input 
+                    <div className="input-field  col l8 m8 s12">
+                        <label className="active" htmlFor="todo">Enter todo...</label>
+                        <input
                             onChange={(e) => setInput(e.target.value)}
-                            onKeyUp = {addTodo}
+                            onKeyUp={addTodo}
                             value={input}
                             type="text" name="todo" id="todo" /><br></br>
-                        </div>
+                    </div>
                 </div>
                 <div className="center">
                     <h5 className="teal-text">{`${filter.toString().toUpperCase()} TODOS`}</h5>
@@ -88,8 +94,8 @@ const Main = (props) => {
                     {
                         filteredTodos.length > 0 ? filteredTodos.map(todo => {
                             return (
-                                <li onDoubleClick={ () => toggleTodo(todo.title)  } style={todo.status ==='done' ? {textDecorationLine:'line-through'} : {}} className="collection-item" key={todo.title}>{`${todo.title} -- ${todo.status}`}
-                                    <button onClick={ () => removeTodo(todo.title) } className="red white-text right" style={{borderRadius:'3px', border:'green', padding:'5px'}}> Delete </button>
+                                <li onDoubleClick={() => toggleTodo(todo.title)} style={todo.status === 'done' ? { textDecorationLine: 'line-through' } : {}} className="collection-item" key={todo.title}>{`${todo.title} -- ${todo.status}`}
+                                    <button onClick={() => removeTodo(todo.title)} className="red white-text right" style={{ borderRadius: '3px', border: 'green', padding: '5px' }}> Delete </button>
                                 </li>
                             )
                         })
@@ -98,7 +104,28 @@ const Main = (props) => {
                     }
                 </ul>
             </div>
+            <div className="tap-target  purple lighten-2 white-text" ref={tapRef} data-target="menu">
+                <div className="tap-target-content">
+                    <h5>How to use</h5>
+                    <p>Double tap a todo item to mark as Done/Completed or Active/Uncompleted. To remove item click delete. To add an item: type it and hit Enter! Hurray!</p>
+                </div>
+            </div>
+            <a style={{bottom:'12%', position:'fixed'}} id="menu" onClick={() => M.TapTarget.getInstance(tapRef.current).open() } className="waves-effect waves-light btn btn-floating" ><i className="material-icons">menu</i></a>
         </div>
+        <footer className="page-footer black center"  style={{bottom:'0%', position:'fixed', width:'100%'}}>
+          <div className="container">
+            <div className="row">
+              TODOS APP
+            </div>
+          </div>
+          <div className="footer-copyright">
+            <div className="container">
+            © 2020 Copyright Text
+            </div>
+          </div>
+        </footer>
+        </>
+        
     );
 }
 
