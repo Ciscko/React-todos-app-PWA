@@ -1,22 +1,17 @@
 import React, { useEffect } from 'react';
 import M from 'materialize-css/dist/js/materialize.min.js'
+import { getTodos } from './todos'
 
-const Main = (props) => {
+const Main = () => {
     const filters = ['all', 'active', 'done']
-    const [todos, setTodos] = React.useState([
-        { title: 'Learn Jest Testing', status: 'active' },
-        { title: 'Learn React Native', status: 'active' },
-        { title: 'Learn Django', status: 'done' }
-    ])
+    const [ loading, setLoding] = React.useState(true)
+    const [todos, setTodos] = React.useState([])
     const [filter, setFilter] = React.useState(filters[0])
     const [filteredTodos, setFiltered] = React.useState([])
     const [input, setInput] = React.useState('')
     const tapRef = React.createRef()
-    let tapInst;
-    useEffect(() => {
-        filterTodos(filter)
-        tapInst = M.TapTarget.init(tapRef.current)
-    }, [filter, todos])
+    
+    
     const filterTodos = (item) => {
         setFilter(item)
         switch (item) {
@@ -36,6 +31,11 @@ const Main = (props) => {
                 return todos
         }
     }
+    useEffect(() => {
+        getTodos().then(res => setTodos([...res.todos])).then(() => filterTodos(filter)).then(() => setLoding(false))
+        M.TapTarget.init(tapRef.current)
+    }, [])
+
     const removeTodo = (mytodo) => {
         setTodos([...todos.filter(todo => todo.title !== mytodo)])
     }
@@ -92,6 +92,7 @@ const Main = (props) => {
                 </div>
                 <ul className="collection">
                     {
+                        loading ? <li className="collection-item">Loading...</li> : 
                         filteredTodos.length > 0 ? filteredTodos.map(todo => {
                             return (
                                 <li onDoubleClick={() => toggleTodo(todo.title)} style={todo.status === 'done' ? { textDecorationLine: 'line-through' } : {}} className="collection-item" key={todo.title}>{`${todo.title} -- ${todo.status}`}

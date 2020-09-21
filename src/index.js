@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import Main from './Main';
+import TodoApp from './Components/TodoApp';
 import 'materialize-css/dist/css/materialize.min.css'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Main/>
+    <TodoApp/>
   </React.StrictMode>,
   document.getElementById('root')
 );
